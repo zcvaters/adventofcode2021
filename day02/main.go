@@ -13,53 +13,20 @@ func main() {
 		return
 	}
 
-	fmt.Println("P1", part1(inputs))
-	fmt.Println("P2", part2(inputs))
-}
-
-func part1(inputs []string) int {
-	var instruction string
-	var horizontal, vertical, units int
-	for index := range inputs {
-		_, err := fmt.Sscanf(inputs[index], "%s %d", &instruction, &units)
-		if err != nil {
-			break
-		}
-		switch instruction {
-		case "forward":
-			horizontal += units
-		case "down":
-			vertical += units
-		case "up":
-			vertical -= units
-		}
-
+	p1Res, err := part1(inputs)
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
 
-	return vertical * horizontal
-}
-
-func part2(inputs []string) int {
-	var instruction string
-	var horizontal, vertical, aim, units int
-	for index := range inputs {
-		_, err := fmt.Sscanf(inputs[index], "%s %d", &instruction, &units)
-		if err != nil {
-			break
-		}
-		switch instruction {
-		case "forward":
-			horizontal += units
-			vertical += aim * units
-		case "down":
-			aim += units
-		case "up":
-			aim -= units
-		}
-
+	p2Res, err := part2(inputs)
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
 
-	return vertical * horizontal
+	fmt.Println("P1", *p1Res)
+	fmt.Println("P2", *p2Res)
 }
 
 func readInput(inputFile string) ([]string, error) {
@@ -80,4 +47,49 @@ func readInput(inputFile string) ([]string, error) {
 	}
 
 	return input, nil
+}
+
+func part1(inputs []string) (*int, error) {
+	var instruction string
+	var horizontal, vertical, units int
+	for index := range inputs {
+		_, err := fmt.Sscanf(inputs[index], "%s %d", &instruction, &units)
+		if err != nil {
+			return nil, fmt.Errorf("Failed in scanner: %v", err)
+		}
+		switch instruction {
+		case "forward":
+			horizontal += units
+		case "down":
+			vertical += units
+		case "up":
+			vertical -= units
+		}
+
+	}
+	depth := vertical * horizontal
+	return &depth, nil
+}
+
+func part2(inputs []string) (*int, error) {
+	var instruction string
+	var horizontal, vertical, aim, units int
+	for index := range inputs {
+		_, err := fmt.Sscanf(inputs[index], "%s %d", &instruction, &units)
+		if err != nil {
+			return nil, fmt.Errorf("Failed in scanner: %v", err)
+		}
+		switch instruction {
+		case "forward":
+			horizontal += units
+			vertical += aim * units
+		case "down":
+			aim += units
+		case "up":
+			aim -= units
+		}
+
+	}
+	depth := vertical * horizontal
+	return &depth, nil
 }
