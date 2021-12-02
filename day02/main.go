@@ -6,10 +6,6 @@ import (
 	"os"
 )
 
-// Forward increases the horizontal position by X units
-// Down decreases the depth by X units
-// Up increases the depth by X units
-
 func main() {
 	inputs, err := readInput("input")
 	if err != nil {
@@ -19,13 +15,11 @@ func main() {
 
 	fmt.Println("P1", part1(inputs))
 	fmt.Println("P2", part2(inputs))
-
 }
 
 func part1(inputs []string) int {
 	var instruction string
-	var units int
-	var horizontal, vertical int
+	var horizontal, vertical, units int
 	for index := range inputs {
 		_, err := fmt.Sscanf(inputs[index], "%s %d", &instruction, &units)
 		if err != nil {
@@ -47,8 +41,7 @@ func part1(inputs []string) int {
 
 func part2(inputs []string) int {
 	var instruction string
-	var units int
-	var horizontal, vertical, aim int
+	var horizontal, vertical, aim, units int
 	for index := range inputs {
 		_, err := fmt.Sscanf(inputs[index], "%s %d", &instruction, &units)
 		if err != nil {
